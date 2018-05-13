@@ -1,0 +1,72 @@
+<contact-form></contact-form>
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Angular</h1>
+<courses></courses>
+<h1>Hello Fardim</h1>
+
+<input type="text" [appInputFormat]="'lowerCase'"/>
+<ul class="nav nav-pills">
+    <li class="nav-item" ><a href="#" class="nav-link"  [class.active]="viewMode == 'list'" (click)="viewMode = 'list'">List View</a></li>
+    <li class="nav-item" ><a href="#" class="nav-link"  [class.active]="viewMode == 'map'" (click)="viewMode = 'map'">Map View</a></li>
+</ul>
+<div [ngSwitch] = "viewMode">
+    <div *ngSwitchCase="'map'">Map view content</div>
+    <div *ngSwitchCase="'list'">List view content</div>
+    <div *ngSwitchDefault>Otherwise</div>
+</div>
+
+<button [style.backgroundColor]="canSave?'blue':'gray'"
+        [style.color]="canSave?'white':'black'"
+        [style.fontWeight]="canSave?'bold':'normal'">CanSave</button>
+
+<button [ngStyle]="{
+        'backgroundColor':canSave?'blue':'gray',
+        'color': canSave?'white':'black',
+        'fontWeight':canSave?'bold':'normal'
+    }">CanSave</button>
+
+<button class="btn btn-primary" (click)="loadCourses()">LoadCourses</button>
+<button class="btn btn-primary" (click)="onAdd()">Add</button>
+<ul>
+    <li *ngFor = "let course of courses;index as i; even as evenItem; odd as oddItem; trackBy:trackCourse">
+        {{i}} - {{course.name}}<span *ngIf="evenItem"><button class="btn btn-info" (click)="onUpdate(course)">Update</button></span>
+        <span *ngIf="oddItem"><button class="btn btn-warning" (click)="onRemove(course)">Remove</button></span>
+    </li>
+</ul>
+
+
+<!-- ngif -->
+<!-- <div *ngIf="courses.length>0; then coursesList else noCourses">
+</div>
+<ng-template #coursesList>
+    CourseList are...
+</ng-template>
+<ng-template #noCourses>
+    No courses yet
+</ng-template> -->
+<!-- ngif -->
+
+<!-- input and output property -->
+<favorite [isFavorite] = "post.isFavorite" (change)="onFavoriteChange($event)"></favorite>
+<!-- input and output property -->
+
+<!-- ng-container ng-content -->
+<bootstrap-panel>
+    <ng-container class="heading">Heading</ng-container>
+    <div class="body">
+        <h1>Body</h1>
+        <p>Some content ...</p>
+    </div>
+</bootstrap-panel>
+<!-- ng-container ng-content -->

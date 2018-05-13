@@ -1,0 +1,4 @@
+<div (click) = "onClick()">
+  <!-- <i class="fa" [class.fa-star]="isFavorite" [class.fa-bug]="!isFavorite"></i> -->
+  <i class="fa" [ngClass]="{'fa-star':isFavorite, 'fa-bug':!isFavorite}"></i>
+</div>
