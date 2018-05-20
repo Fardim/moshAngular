@@ -52,9 +52,19 @@
 
   <div class="form-group">
     <label for="contactMethod">Contact Method</label>
-    <select ngModel name="contactMethod" id="contactMethod" class="form-control">
-
+    <select multiple ngModel name="contactMethod" id="contactMethod" class="form-control">
+      <!--To submit the whole object of dropdown instead only value -->
+      <!-- <option *ngFor="let method of contactMethods" [ngValue]="method">{{method.name}}</option>  -->
+      <!--To submit the only dropdown value -->
+      <option *ngFor="let method of contactMethods" [value]="method.id">{{method.name}}</option>
     </select>
+  </div>
+
+  <div class="radio" *ngFor="let method of contactMethods">
+    <label>
+      <input ngModel type="radio" name="contactMethod" [value]="method.id">
+      {{method.name}}
+    </label>
   </div>
 
   <p>{{f.value | json}}</p>
