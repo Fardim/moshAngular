@@ -1,5 +1,6 @@
 import { CoursesService } from './courses.service';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgModule } from '@angular/core';
 
@@ -15,6 +16,8 @@ import { InputFormatDirective } from './input-format.directive';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { NewCourseFormComponent } from './new-course-form/new-course-form.component';
+import { PostsComponent } from './posts/posts.component';
+
 
 
 @NgModule({
@@ -29,12 +32,14 @@ import { NewCourseFormComponent } from './new-course-form/new-course-form.compon
     ContactFormComponent,
     SignupFormComponent,
     NewCourseFormComponent,
+    PostsComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     AngularFontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     CoursesService
