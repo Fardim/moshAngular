@@ -1,3 +1,4 @@
+import { PostService } from './../services/post.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
@@ -7,40 +8,74 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  url : string = 'https://jsonplaceholder.typicode.com/posts';
   posts : Post[];
-  constructor(private http : HttpClient) {    // private keyword makes it a field in the class
-    http.get(this.url).subscribe((response:Post[])=>{
+  constructor(private service : PostService) {    // private keyword makes it a field in the class
+    
+  }
+
+  ngOnInit() {
+    this.service.getPost()
+    .subscribe(
+      (response:Post[])=>{
       //console.log(response); // From angular 6 this response.json() dont work.
-      this.posts = response;
-    })
+        this.posts = response;
+      },
+      error=>{
+        alert('Something went wrong');
+        console.log(error);
+      });
   }
   
   CreatePost(input : HTMLInputElement){
     let post :any = {title : input.value};
-    this.http.post(this.url,JSON.stringify(post)).subscribe((response:Post)=>{
-      post.id = response.id;
-      this.posts.splice(0,0,post);
-      console.log(response);
-    })
+    this.service.createPost(post)
+    .subscribe(
+      (response:Post)=>{
+        post.id = response.id;
+        this.posts.splice(0,0,post);
+        console.log(response);
+      },
+      (error : Response)=>{
+        if(error.status === 400){
+          // this.form.setErrors(error.json());
+        }
+        else{
+          alert('Something went wrong');
+          console.log(error);
+        }
+      })
   }
 
   UpdatePost(post : any){
-    this.http.patch(this.url+'/'+post.id, JSON.stringify({isRead : true})).subscribe(response =>{
-      console.log(response);
-    })
-
+    this.service.updatePost(post)
+    .subscribe(
+      response =>{
+        console.log(response);
+      },
+      error=>{
+        alert('Something went wrong');
+        console.log(error);
+      })
   }
 
   DeletePost(post){
-    this.http.delete(this.url+'/'+post.id,).subscribe(response=>{
-      let index = this.posts.indexOf(post);
-      this.posts.splice(index,1);
-    })
+    this.service.deletePost(333)
+    .subscribe(
+      response=>{
+        let index = this.posts.indexOf(post);
+        this.posts.splice(index,1);
+      },
+      (error: Response)=>{
+        if(error.status === 404)
+          alert('Post with this id is already deleted');
+        else{
+          alert('Something went wrong');
+          console.log(error);  
+        }
+      })
   }
 
-  ngOnInit() {
-  }
+  
 
 }
 

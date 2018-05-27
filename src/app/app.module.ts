@@ -1,3 +1,4 @@
+import { PostService } from './services/post.service';
 import { CoursesService } from './courses.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -42,7 +43,8 @@ import { PostsComponent } from './posts/posts.component';
     ReactiveFormsModule,
   ],
   providers: [
-    CoursesService
+    CoursesService,
+    PostService
   ],
   bootstrap: [AppComponent]
 })
