@@ -1,6 +1,7 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 export class UsernameValidators{
+    //sync validator
     static cannnotContainSpace(control : AbstractControl) : ValidationErrors |null {
         if((control.value as string).indexOf(' ')>=0){
             return {cannnotContainSpace : true }
@@ -9,6 +10,7 @@ export class UsernameValidators{
         return null;
     };
 
+    //async validator
     static shouldBeUnique(control :AbstractControl) : Promise<ValidationErrors | null>{
         return new Promise((resolve,reject)=>{
             setTimeout(()=>{
