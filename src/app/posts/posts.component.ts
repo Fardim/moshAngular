@@ -1,6 +1,9 @@
+import { BadInput } from './../common/bad-input-error';
+import { AppError } from './../common/app-error';
 import { PostService } from './../services/post.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NotFoundError } from '../common/not-found-error';
 
 @Component({
   selector: 'app-posts',
@@ -21,8 +24,9 @@ export class PostsComponent implements OnInit {
         this.posts = response;
       },
       error=>{
-        alert('Something went wrong');
-        console.log(error);
+        throw error;
+        // alert('Something went wrong');
+        // console.log(error);
       });
   }
   
@@ -35,15 +39,26 @@ export class PostsComponent implements OnInit {
         this.posts.splice(0,0,post);
         console.log(response);
       },
-      (error : Response)=>{
-        if(error.status === 400){
-          // this.form.setErrors(error.json());
+      (error : AppError)=>{
+        if(error instanceof BadInput){
+          //***this.form.setErrors(error.originalError);
         }
         else{
-          alert('Something went wrong');
-          console.log(error);
+          throw error;
+          // alert('Something went wrong');
+          // console.log(error);
         }
-      })
+      }
+      // (error : Response)=>{
+      //   if(error.status === 400){
+      //     // this.form.setErrors(error.json());
+      //   }
+      //   else{
+      //     alert('Something went wrong');
+      //     console.log(error);
+      //   }
+      // }
+    )
   }
 
   UpdatePost(post : any){
@@ -53,8 +68,9 @@ export class PostsComponent implements OnInit {
         console.log(response);
       },
       error=>{
-        alert('Something went wrong');
-        console.log(error);
+        throw error;
+        // alert('Something went wrong');
+        // console.log(error);
       })
   }
 
@@ -65,14 +81,24 @@ export class PostsComponent implements OnInit {
         let index = this.posts.indexOf(post);
         this.posts.splice(index,1);
       },
-      (error: Response)=>{
-        if(error.status === 404)
+      (error: AppError)=>{
+        if(error instanceof NotFoundError)
           alert('Post with this id is already deleted');
         else{
-          alert('Something went wrong');
-          console.log(error);  
+          throw error;
+          // alert('An unexpected error occured.');
+          // console.log(error);  
         }
-      })
+      }
+      // (error: Response)=>{
+      //   if(error.status === 404)
+      //     alert('Post with this id is already deleted');
+      //   else{
+      //     alert('Something went wrong');
+      //     console.log(error);  
+      //   }
+      // }
+    )
   }
 
   
