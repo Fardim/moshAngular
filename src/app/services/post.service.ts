@@ -1,7 +1,7 @@
 import { BadInput } from './../common/bad-input-error';
 import { NotFoundError } from './../common/not-found-error';
 import { AppError } from './../common/app-error';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
