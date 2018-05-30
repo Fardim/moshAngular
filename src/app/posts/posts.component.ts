@@ -17,11 +17,11 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getPost()
+    this.service.getAll()
     .subscribe(
-      (response:Post[])=>{
+      (posts : Post[])=>{
       //console.log(response); // From angular 6 this response.json() dont work.
-        this.posts = response;
+        this.posts = posts;
       },
       error=>{
         throw error;
@@ -32,14 +32,19 @@ export class PostsComponent implements OnInit {
   
   CreatePost(input : HTMLInputElement){
     let post :any = {title : input.value};
-    this.service.createPost(post)
+    this.posts.splice(0,0,post);
+
+    input.value = '';
+
+    this.service.create(post)
     .subscribe(
-      (response:Post)=>{
-        post.id = response.id;
-        this.posts.splice(0,0,post);
-        console.log(response);
+      (newPost:Post)=>{
+        post.id = newPost.id;
+        //this.posts.splice(0,0,post); //optimistic way
+        console.log(newPost);
       },
       (error : AppError)=>{
+        this.posts.splice(0,1);
         if(error instanceof BadInput){
           //***this.form.setErrors(error.originalError);
         }
@@ -62,10 +67,10 @@ export class PostsComponent implements OnInit {
   }
 
   UpdatePost(post : any){
-    this.service.updatePost(post)
+    this.service.update(post)
     .subscribe(
-      response =>{
-        console.log(response);
+      updatedPost =>{
+        console.log(updatedPost);
       },
       error=>{
         throw error;
@@ -75,13 +80,18 @@ export class PostsComponent implements OnInit {
   }
 
   DeletePost(post){
-    this.service.deletePost(333)
+    let index = this.posts.indexOf(post);
+    this.posts.splice(index,1);
+
+    this.service.delete(333)
     .subscribe(
-      response=>{
-        let index = this.posts.indexOf(post);
-        this.posts.splice(index,1);
+      // response=>{
+        ()=>{ // since delete dont return any body hence response in empty or function parameter is empty
+        // let index = this.posts.indexOf(post);
+        // this.posts.splice(index,1);
       },
       (error: AppError)=>{
+        this.posts.splice(index,0,post);
         if(error instanceof NotFoundError)
           alert('Post with this id is already deleted');
         else{
