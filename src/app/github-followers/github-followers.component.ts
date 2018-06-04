@@ -8,14 +8,20 @@ import { StateKey } from '@angular/platform-browser';
   styleUrls: ['./github-followers.component.css']
 })
 export class GithubFollowersComponent implements OnInit {
-  followers: Follower[];
+  followers: any[];
 
   constructor(private service: GithubFollowersService) { }
 
   ngOnInit() {
     this.service.getAll()
-      .subscribe((followers: Follower[]) => {this.followers = followers}, 
-      error => {throw error;});
+      .subscribe(
+        (followers: any[]) => {
+          this.followers = followers
+        }, 
+        error => {
+          throw error;
+        }
+      );
   }
 }
 
