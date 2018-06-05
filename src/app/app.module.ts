@@ -60,7 +60,7 @@ import { GithubFollowersComponent } from './github-followers/github-followers.co
         component : HomeComponent
       },
       {
-        path: 'followers/:id', 
+        path: 'followers/:id/:username', 
         component : GithubProfileComponent
       },
       {

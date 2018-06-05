@@ -13,7 +13,9 @@
   <div class="container-fluid">
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav">
-        <li routerLinkActive="active current" class="nav-item"><a class="nav-link" routerLink="/followers">Followers</a></li>
+        <li routerLinkActive="active current" class="nav-item">
+          <a class="nav-link" routerLink="/followers" [queryParams]="{page:1, order: 'newest'}">Followers</a>
+        </li>
         <li routerLinkActive="active current" class="nav-item"><a class="nav-link" routerLink="/posts">Posts</a></li>
       </ul>
     </div>
