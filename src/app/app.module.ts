@@ -1,3 +1,10 @@
+import { MockBackend } from '@angular/http/testing';
+import { fakeBackendProvider } from './helpers/fake-backend';
+import { AuthService } from './services/auth.service';
+import { OrderService } from './services/order.service';
+import { NoAccessComponent } from './no-access/no-access.component';
+import { AdminComponent } from './admin/admin.component';
+import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -26,6 +33,7 @@ import { PostsComponent } from './posts/posts.component';
 import { AppErrorHandler } from './common/app-error-handler';
 import { GithubProfileComponent } from './github-profile/github-profile.component';
 import { GithubFollowersComponent } from './github-followers/github-followers.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 
@@ -46,7 +54,12 @@ import { GithubFollowersComponent } from './github-followers/github-followers.co
     HomeComponent,
     GithubProfileComponent,
     GithubFollowersComponent,
-    NotFoundComponent
+    NotFoundComponent,
+
+    LoginComponent,
+    SignupComponent,
+    AdminComponent,
+    NoAccessComponent
   ],
   imports: [
     BrowserModule,
@@ -59,33 +72,26 @@ import { GithubFollowersComponent } from './github-followers/github-followers.co
         path: '',
         component : HomeComponent
       },
-      {
-        path: 'followers/:id/:username', 
-        component : GithubProfileComponent
-      },
-      {
-        path: 'followers', 
-        component : GithubFollowersComponent
-      },
-      {
-        path: 'profile/:username',
-        component : GithubProfileComponent
-      },
-      {
-        path: 'posts',
-        component : PostsComponent
-      },
-      {
-        path: '**',
-        component : NotFoundComponent
-      },
+      { path: 'admin', component: AdminComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'no-access', component: NoAccessComponent },
+      { path: 'followers/:id/:username', component : GithubProfileComponent },
+      { path: 'followers', component : GithubFollowersComponent },
+      { path: 'profile/:username', component : GithubProfileComponent },
+      { path: 'posts', component : PostsComponent },
+      { path: '**', component : NotFoundComponent },
     ])
   ],
   providers: [
     CoursesService,
     PostService,
     GithubFollowersService,
-    {provide: ErrorHandler, useClass: AppErrorHandler}
+    OrderService,
+    AuthService,
+    {provide: ErrorHandler, useClass: AppErrorHandler},
+    // For creating a mock back-end. You don't need these in a real app. 
+    fakeBackendProvider,
+    MockBackend
   ],
   bootstrap: [AppComponent]
 })
