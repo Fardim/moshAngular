@@ -1,3 +1,5 @@
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { fakeBackendProvider } from './helpers/fake-backend';
 import { AuthService } from './services/auth.service';
@@ -12,7 +14,7 @@ import { PostService } from './services/post.service';
 import { GithubFollowersService } from './services/github-followers.service';
 import { CoursesService } from './courses.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgModule, ErrorHandler } from '@angular/core';
 
@@ -86,9 +88,11 @@ import { SignupComponent } from './signup/signup.component';
     OrderService,
     AuthService,
     {provide: ErrorHandler, useClass: AppErrorHandler},
+    //{provide : HTTP_INTERCEPTORS, useClass : JwtInterceptor},
     // For creating a mock back-end. You don't need these in a real app. 
     fakeBackendProvider,
-    MockBackend
+    MockBackend,
+    BaseRequestOptions
   ],
   bootstrap: [AppComponent]
 })
