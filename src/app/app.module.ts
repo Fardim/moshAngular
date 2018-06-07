@@ -68,10 +68,7 @@ import { SignupComponent } from './signup/signup.component';
     AngularFontAwesomeModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      {
-        path: '',
-        component : HomeComponent
-      },
+      { path: '', component : HomeComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'login', component: LoginComponent },
       { path: 'no-access', component: NoAccessComponent },
