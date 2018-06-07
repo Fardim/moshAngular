@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
@@ -7,8 +8,15 @@ export class AuthService {
   }
 
   login(credentials) { 
-   return this.http.post('/api/authenticate', 
-      JSON.stringify(credentials));
+   return this.http.post('/api/authenticate', JSON.stringify(credentials))
+    .pipe(map(response => {
+      let result = response.json();
+      if(result && result.token){
+        localStorage.setItem('token',result.token);
+        return true;
+      }
+      return false;
+    }));
   }
 
   logout() { 
