@@ -1,4 +1,5 @@
-import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { AdminAuthGaurd } from './services/admin-auth-gaurd.service';
+import { AuthGaurd } from './services/auth-gaurd.service';
 import { BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { fakeBackendProvider } from './helpers/fake-backend';
@@ -71,7 +72,7 @@ import { SignupComponent } from './signup/signup.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component : HomeComponent },
-      { path: 'admin', component: AdminComponent },
+      { path: 'admin', component : AdminComponent, canActivate:[AuthGaurd, AdminAuthGaurd] },
       { path: 'login', component: LoginComponent },
       { path: 'no-access', component: NoAccessComponent },
       { path: 'followers/:id/:username', component : GithubProfileComponent },
@@ -87,6 +88,8 @@ import { SignupComponent } from './signup/signup.component';
     GithubFollowersService,
     OrderService,
     AuthService,
+    AuthGaurd,
+    AdminAuthGaurd,
     {provide: ErrorHandler, useClass: AppErrorHandler},
     //{provide : HTTP_INTERCEPTORS, useClass : JwtInterceptor},
     // For creating a mock back-end. You don't need these in a real app. 
