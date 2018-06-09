@@ -14,7 +14,6 @@ import { CoursesService } from './courses.service';
                     (click) = "onSave($event)">Save</button>
 
                 </div>
-                <input #email (keyup.enter)="onKeyUp(email.value)"/>
                 <br/>
                 <input  [(ngModel)] = "emails" (keyup.enter) = "onKeyUp()" />
                 <br/>
